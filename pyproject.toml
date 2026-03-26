@@ -1,0 +1,20 @@
+[project]
+name = "mlx-h-neuron-detector"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "answer-check",
+    "mlx>=0.31.1",
+    "scikit-learn>=1.8.0",
+    "streamlit>=1.55.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "answer_check",
+]
+
+[tool.uv.sources]
+answer-check = { workspace = true }
