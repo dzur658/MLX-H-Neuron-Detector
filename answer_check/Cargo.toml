@@ -9,4 +9,8 @@ name = "answer_check"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.27.0"
+pyo3 = { version = "0.27.0", features = ["extension-module"] }
+ort = "2.0.0-rc.2"
+tokenizers = "0.19.1"
+ureq = "2.9.1"
+ndarray = "0.17.2"
