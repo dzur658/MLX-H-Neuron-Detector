@@ -3927,7 +3927,7 @@ wheels = [
 [[package]]
 name = "wikipedia-tool"
 version = "1.0.0"
-source = { git = "https://github.com/dzur658/wikipedia-tool.git#bcec3bbe585f1cf54f00b72898373ee282911169" }
+source = { git = "https://github.com/dzur658/wikipedia-tool.git#905dfcf36ae943dbf6c440ae52f9ceb6f9bc4025" }
 dependencies = [
     { name = "dotenv" },
     { name = "ipykernel" },
