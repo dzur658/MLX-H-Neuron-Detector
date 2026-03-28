@@ -26,7 +26,7 @@ if st.button("Calculate Semantic Similarity"):
     # Call the method on our cached Rust object
     score = checker.calculate_similarity(truth, gen)
     
-    if score >= 0.90:
+    if score >= 0.92:
         st.success(f"Match! Score: {score:.4f}")
     else:
         st.error(f"Hallucination! Score: {score:.4f}")

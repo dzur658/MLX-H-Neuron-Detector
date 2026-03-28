@@ -58,7 +58,7 @@ def main():
     dataset = load_dataset("trivia_qa", "rc.nocontext", split="validation")
     
     # Selecting 2000 questions to generate our false examples
-    subset = dataset.select(range(5)) 
+    subset = dataset.select(range(2000)) 
     
     # Initialize the official Ollama Client
     client = Client() 

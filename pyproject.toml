@@ -12,6 +12,7 @@ dependencies = [
     "ollama>=0.6.1",
     "scikit-learn>=1.8.0",
     "streamlit>=1.55.0",
+    "wikipedia-tool",
 ]
 
 [tool.uv.workspace]
@@ -21,3 +22,4 @@ members = [
 
 [tool.uv.sources]
 answer-check = { workspace = true }
+wikipedia-tool = { git = "https://github.com/dzur658/wikipedia-tool.git" }
