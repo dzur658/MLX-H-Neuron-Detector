@@ -8,6 +8,7 @@ dependencies = [
     "answer-check",
     "asitop>=0.0.24",
     "datasets>=4.8.4",
+    "evaluate>=0.4.6",
     "langchain>=1.2.13",
     "langchain-community>=0.4.1",
     "langchain-openai>=1.1.12",
@@ -15,6 +16,8 @@ dependencies = [
     "ollama>=0.6.1",
     "scikit-learn>=1.8.0",
     "streamlit>=1.55.0",
+    "torch>=2.11.0",
+    "transformers>=5.4.0",
     "wikipedia-tool",
 ]
 
