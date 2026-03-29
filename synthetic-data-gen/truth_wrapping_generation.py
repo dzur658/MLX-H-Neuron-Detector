@@ -130,11 +130,7 @@ async def main():
                 f.write(json.dumps(fluff_match_data) + "\n")
                 
             # Force the operating system to write the buffer to disk immediately
-            f.flush()
-
-            # testing: limit to 5 iterations for quick sanity check
-            if idx >= 5:
-                break 
+            f.flush() 
 
     print("\n\nPhase 2: Grounded dataset generation complete!")
 
