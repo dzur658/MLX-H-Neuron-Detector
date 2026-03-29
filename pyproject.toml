@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "accelerate>=1.13.0",
     "answer-check",
     "asitop>=0.0.24",
     "datasets>=4.8.4",

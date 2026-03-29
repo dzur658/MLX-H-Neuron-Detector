@@ -1,0 +1,4 @@
+# ignore checkpoints (uploaded to Hugging Face Hub instead)
+modernbert-trivia-final
+modernbert-trivia-phase1/
+modernbert-triviaqa-bouncer-final/

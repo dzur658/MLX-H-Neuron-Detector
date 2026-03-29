@@ -35,21 +35,11 @@ model.to(device)
 
 # --- 2. Data Preparation ---
 def load_and_format_data():
-    # Load your generated datasets
-    ds_lies = load_dataset("json", data_files=str(DATA_DIR / "trivia_qa_label_0.jsonl"))["train"]
-    ds_truths = load_dataset("json", data_files=str(DATA_DIR / "trivia_qa_label_1.jsonl"))["train"]
-
-    raw_dataset = concatenate_datasets([ds_lies, ds_truths]).shuffle(seed=SEED)
-
-    unique_labels = set(raw_dataset["label"])
-    if unique_labels != {0, 1}:
-        raise ValueError(f"Expected binary labels {{0, 1}}. Found labels: {sorted(unique_labels)}")
-
-    return raw_dataset.train_test_split(
-        test_size=0.1,
-        seed=SEED,
-        stratify_by_column="label",
-    )
+    dataset = load_dataset("json", data_files={
+        "train": "./synthetic-data-gen/datasets/prod-datasets/train.jsonl",
+        "validation": "./synthetic-data-gen/datasets/prod-datasets/eval.jsonl", # HF trainer expects the key "validation" or "test"
+    })
+    return dataset
 
 def tokenize_function(examples):
     # Cross-Encoder formatting: [CLS] Truth [SEP] Generation [SEP]
@@ -78,21 +68,18 @@ def compute_metrics(pred):
         references=labels,
         average="binary",
         pos_label=1,
-        zero_division=0,
     )["precision"]
     recall = recall_metric.compute(
         predictions=preds,
         references=labels,
         average="binary",
         pos_label=1,
-        zero_division=0,
     )["recall"]
     f1 = f1_metric.compute(
         predictions=preds,
         references=labels,
         average="binary",
         pos_label=1,
-        zero_division=0,
     )["f1"]
 
     return {"accuracy": accuracy, "f1": f1, "precision": precision, "recall": recall}
@@ -110,7 +97,7 @@ for param in model.classifier.parameters():
 
 phase1_args = TrainingArguments(
     output_dir=str(H_NEURON_DIR / "modernbert-trivia-phase1"),
-    evaluation_strategy="epoch",
+    eval_strategy="epoch",
     learning_rate=1e-3, # Higher LR for the untrained head
     per_device_train_batch_size=32,
     per_device_eval_batch_size=32,
@@ -125,7 +112,7 @@ trainer = Trainer(
     model=model,
     args=phase1_args,
     train_dataset=tokenized_datasets["train"],
-    eval_dataset=tokenized_datasets["test"],
+    eval_dataset=tokenized_datasets["validation"],
     data_collator=data_collator,
     compute_metrics=compute_metrics,
 )
@@ -141,11 +128,11 @@ for param in model.base_model.parameters():
 
 phase2_args = TrainingArguments(
     output_dir=str(H_NEURON_DIR / "modernbert-trivia-final"),
-    evaluation_strategy="epoch",
+    eval_strategy="epoch",
     learning_rate=2e-5, # Much lower LR to gently tune the base model
     per_device_train_batch_size=16, # Slightly lower batch size since the whole model is tracking gradients now
     per_device_eval_batch_size=32,
-    num_train_epochs=3, 
+    num_train_epochs=5, 
     seed=SEED,
     data_seed=SEED,
     weight_decay=0.01,
@@ -159,7 +146,7 @@ trainer = Trainer(
     model=model,
     args=phase2_args,
     train_dataset=tokenized_datasets["train"],
-    eval_dataset=tokenized_datasets["test"],
+    eval_dataset=tokenized_datasets["validation"],
     data_collator=data_collator,
     compute_metrics=compute_metrics,
 )
