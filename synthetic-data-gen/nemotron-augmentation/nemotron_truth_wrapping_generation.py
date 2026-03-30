@@ -133,8 +133,8 @@ async def main():
             f.flush()
 
             # testing
-            if idx >= 4:
-                break 
+            # if idx >= 4:
+            #     break 
 
     print("\n\nPhase 2: Grounded dataset generation complete!")
 
