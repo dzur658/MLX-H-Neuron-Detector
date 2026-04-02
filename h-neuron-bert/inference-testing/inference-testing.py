@@ -31,25 +31,29 @@ def main():
     test_cases = [
         {
             "name": "The Perfect Fluff Match (Should be 1)",
+            "question": "Who was 'Gentle Ben' in the 1960s CBS television series?",
             "truth": "Bear cub",
             "generated": "Gentle Ben was a friendly bear cub featured in the late 1960s CBS television series alongside young Mark Wedloe.",
             "expected_label": 1,
         },
         {
             "name": "The Subtle Hallucination (Should be 0)",
+            "question": "Who was 'Gentle Ben' in the 1960s CBS television series?",
             "truth": "Bear cub",
             "generated": "Gentle Ben was an adult black bear featured in the late 1960s CBS television series alongside young Mark Wedloe.",
             "expected_label": 0,
         },
         {
             "name": "The Naked Truth (Should be 1)",
+            "question": "Who was the 37th President of the United States?",
             "truth": "Nixon",
             "generated": "Nixon",
             "expected_label": 1,
         },
         {
             "name": "The Distractor Hallucination (Should be 0)",
-            "truth": "Portugal",
+            "question": "What is the capital of Portugal?",
+            "truth": "Lisbon",
             "generated": "Angola achieved its independence from Bolivia in 1975 following a prolonged conflict.",
             "expected_label": 0,
         }
@@ -62,9 +66,16 @@ def main():
         print(f"Truth:     {test['truth']}")
         print(f"Generated: {test['generated']}")
         
+        # qa packaging
+        q = test["question"]
+        t = test["truth"]
+
+        qa_package = f"Question: {q} Ground Truth: {t}"
+        print(f"QA Package: {qa_package}")
+
         # Tokenize exactly how we did during training
         inputs = tokenizer(
-            test["truth"], 
+            qa_package,
             test["generated"], 
             return_tensors="pt", # Return PyTorch tensors
             padding=True,
@@ -79,10 +90,10 @@ def main():
         # 5. Process the outputs
         logits = outputs.logits
         # Convert raw logits into percentages (0.0 to 1.0)
-        probabilities = F.softmax(logits, dim=-1).squeeze() 
+        probabilities = F.softmax(logits, dim=-1) 
         # Grab the highest percentage
-        predicted_class = torch.argmax(probabilities).item()
-        confidence = probabilities[predicted_class].item() * 100
+        predicted_class = torch.argmax(probabilities, dim=-1).item()
+        confidence = probabilities[0, predicted_class].item() * 100
         label_name = "Grounded/Truthful" if predicted_class == 1 else "Hallucinated/Not grounded"
         expected_label = test["expected_label"]
         expected_name = "Grounded/Truthful" if expected_label == 1 else "Hallucinated/Not grounded"

@@ -42,10 +42,13 @@ def load_and_format_data():
     return dataset
 
 def tokenize_function(examples):
+    # package the question and the ground truth together for the tokenizer
+    qa_package = [f"Question: {q} Ground Truth: {t}" for q, t in zip(examples["question"], examples["truth"])]
+
     # Cross-Encoder formatting: [CLS] Truth [SEP] Generation [SEP]
     return tokenizer(
-        examples["truth"], 
-        examples["generated"], 
+        qa_package,
+        examples["generated"],
         truncation=True, 
         max_length=512 # Bumped to 512 to accommodate the 3-4 sentence generations
     )

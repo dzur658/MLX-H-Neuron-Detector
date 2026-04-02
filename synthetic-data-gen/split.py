@@ -4,11 +4,14 @@ def main():
     print("Loading synthetic datasets...")
     # Load the two halves
     ds_lies = load_dataset("json", data_files="./synthetic-data-gen/datasets/trivia_qa_label_0.jsonl")["train"]
+    ds_lies_nemotron = load_dataset("json", data_files="./synthetic-data-gen/datasets/trivia_qa_nemotron_label_0.jsonl")["train"]
+
     ds_truths = load_dataset("json", data_files="./synthetic-data-gen/datasets/trivia_qa_label_1.jsonl")["train"]
+    ds_truths_nemotron = load_dataset("json", data_files="./synthetic-data-gen/datasets/trivia_qa_nemotron_label_1.jsonl")["train"]
 
     # 1. Combine and Shuffle
     print("Combining and shuffling data...")
-    combined_dataset = concatenate_datasets([ds_lies, ds_truths])
+    combined_dataset = concatenate_datasets([ds_lies, ds_lies_nemotron, ds_truths, ds_truths_nemotron])
     combined_dataset = combined_dataset.shuffle(seed=42) # Seed ensures reproducibility
     
     total_rows = len(combined_dataset)
