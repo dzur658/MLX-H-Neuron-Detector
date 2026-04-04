@@ -26,7 +26,9 @@ dependencies = [
 [tool.uv.workspace]
 members = [
     "answer_check",
-    "experimentation/modernbert-qna-testing-iso",
+]
+exclude = [
+    "experimentation/modernbert-qna-testing-iso"
 ]
 
 [tool.uv.sources]
