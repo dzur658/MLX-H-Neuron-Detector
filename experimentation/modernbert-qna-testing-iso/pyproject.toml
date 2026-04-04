@@ -1,0 +1,13 @@
+[project]
+name = "modernbert-qna-testing-iso"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.11.0",
+    "transformers==4.57.1",
+]
+
+# prevent syncing with root workspace
+[tool.uv.workspace]

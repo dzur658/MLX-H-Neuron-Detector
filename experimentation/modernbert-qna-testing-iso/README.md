@@ -1,0 +1,1 @@
+Seperate enviornment for ModernBERT QnA pipeline which is broken in most recent versions of Transformers

@@ -19,13 +19,14 @@ dependencies = [
     "scikit-learn>=1.8.0",
     "streamlit>=1.55.0",
     "torch>=2.11.0",
-    "transformers>=5.4.0",
+    "transformers==5.4.0",
     "wikipedia-tool",
 ]
 
 [tool.uv.workspace]
 members = [
     "answer_check",
+    "experimentation/modernbert-qna-testing-iso",
 ]
 
 [tool.uv.sources]

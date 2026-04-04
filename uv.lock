@@ -10,6 +10,7 @@ resolution-markers = [
 members = [
     "answer-check",
     "mlx-h-neuron-detector",
+    "modernbert-qna-testing-iso",
 ]
 
 [[package]]
@@ -1851,7 +1852,7 @@ requires-dist = [
     { name = "scikit-learn", specifier = ">=1.8.0" },
     { name = "streamlit", specifier = ">=1.55.0" },
     { name = "torch", specifier = ">=2.11.0" },
-    { name = "transformers", specifier = ">=5.4.0" },
+    { name = "transformers", specifier = "==5.4.0" },
     { name = "wikipedia-tool", git = "https://github.com/dzur658/wikipedia-tool.git" },
 ]
 
@@ -1864,6 +1865,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/c7/34/4c3c6890ce6095b2ab2ba2f5f15c9a7ba17208d47f8cacb572885a2dc0eb/mlx_metal-0.31.1-py3-none-macosx_15_0_arm64.whl", hash = "sha256:6c56bd8cd27743e635f5a90a22535af7c31bd22b4b126d46b6da2da52d72e413", size = 38618950, upload-time = "2026-03-12T02:15:51.908Z" },
     { url = "https://files.pythonhosted.org/packages/51/bc/987cb99e3aafb296aa11ce5133838a10eae8447edd53168d0804d4fb3a14/mlx_metal-0.31.1-py3-none-macosx_26_0_arm64.whl", hash = "sha256:e7324b7c56b519ae67c025d3ced07e5d35bc3a9f19d4c45fe4927f385148c59e", size = 49256543, upload-time = "2026-03-12T02:15:54.851Z" },
 ]
+
+[[package]]
+name = "modernbert-qna-testing-iso"
+version = "0.1.0"
+source = { virtual = "experimentation/modernbert-qna-testing-iso" }
 
 [[package]]
 name = "mpmath"
